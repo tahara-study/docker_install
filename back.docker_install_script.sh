@@ -1,9 +1,7 @@
 #!/bin/bash
 
 
-
-
-### docker
+# docker
 sudo apt-get remove docker docker-engine docker.io containerd runc
 sudo apt-get update
 sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
@@ -17,22 +15,10 @@ sudo curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-
 sudo chmod +x /usr/local/bin/docker-compose
 
 
-
-
-### cuda
-# wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-repo-ubuntu1804_10.1.243-1_amd64.deb
-# sudo apt install ./cuda-repo-ubuntu1804_10.1.243-1_amd64.deb
-# sudo apt-key adv --fetch-keys http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/7fa2af80.pub
-
-wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-ubuntu1804.pin
-sudo mv cuda-ubuntu1804.pin /etc/apt/preferences.d/cuda-repository-pin-600
-wget https://developer.download.nvidia.com/compute/cuda/11.2.1/local_installers/cuda-repo-ubuntu1804-11-2-local_11.2.1-460.32.03-1_amd64.deb
-sudo dpkg -i cuda-repo-ubuntu1804-11-2-local_11.2.1-460.32.03-1_amd64.deb
-sudo apt-key add /var/cuda-repo-ubuntu1804-11-2-local/7fa2af80.pub
-sudo apt-get update
-sudo apt-get -y install cuda
-
-
+# cuda
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-repo-ubuntu1804_10.1.243-1_amd64.deb
+sudo apt install ./cuda-repo-ubuntu1804_10.1.243-1_amd64.deb
+sudo apt-key adv --fetch-keys http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/7fa2af80.pub
 
 
 # machine learning repo
@@ -42,9 +28,7 @@ sudo apt update
 sudo ubuntu-drivers autoinstall
 
 
-
-
-### nvidia-docker
+# nvidia-docker
 distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
 curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -
 curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
@@ -53,9 +37,7 @@ sudo apt-get update && sudo apt-get install -y nvidia-container-toolkit
 sudo systemctl restart docker
 
 
-
-
-### docker compose
+# docker compose
 sudo apt-get install nvidia-container-runtime
 sudo mkdir -p /etc/systemd/system/docker.service.d
 sudo tee /etc/systemd/system/docker.service.d/override.conf <<EOF
@@ -78,14 +60,10 @@ EOF
 sudo pkill -SIGHUP dockerd
 
 
-
-
 # add usermod
 sudo groupadd docker
 sudo usermod -aG docker ${USER}
 su -s ${USER}
-
-
 
 
 # nvidia-docker
